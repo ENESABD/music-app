@@ -31,6 +31,6 @@ class Detail(models.Model):
     duration_of_song = models.CharField(max_length = 255)
     copyrighted = models.BooleanField()
 
-    #def __str__(self):
-     #   return str(self.song)
+    def __str__(self):
+        return str(self.song)
     
