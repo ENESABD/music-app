@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 class RatingSerializer(serializers.ModelSerializer):
   class Meta:
     model = Rating
-    fields = ('username', 'song', 'rating')
+    fields = ['username', 'song', 'rating']
 
 class ArtistSerializer(serializers.ModelSerializer):
   class Meta:
