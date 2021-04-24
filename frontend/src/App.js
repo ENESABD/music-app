@@ -9,7 +9,7 @@ function App() {
   const [lst,setList] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/ratings/")
+    axios.get("http://localhost:8000/api/users/")
       .then(res => setList(res.data))
       .catch(err => console.log(err)); 
   });
