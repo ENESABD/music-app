@@ -14,7 +14,7 @@ function App() {
       .catch(err => console.log(err)); 
   });
 
-  // enes is paranoid
+  // Ismail is irresponsible
 
   
 
