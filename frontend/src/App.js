@@ -9,14 +9,18 @@ function App() {
   const [list,setList] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/ratings/")
+    axios.get("http://localhost:8000/api/users/")
       .then(res => setList(res.data))
       .catch(err => console.log(err)); 
   });
 
+  
+
+  const newItems = list.map((value) => value.username);
+
   return (
-    <div className="App">
-        {list}
+    <div>
+        {newItems}
     </div>
   );
 }
