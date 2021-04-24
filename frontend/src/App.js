@@ -21,7 +21,7 @@ function App() {
   const newItems = list.map((value) => value.username);
 
   return (
-    <div className="App">
+    <div>
         {newItems}
     </div>
   );
