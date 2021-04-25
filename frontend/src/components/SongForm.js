@@ -1,11 +1,13 @@
 import React, {useState} from 'react'
 import axios from "axios";
 
-function SongForm(props) {
+function SongForm({songAdded, setSongAdded}) {
     const [data, setData] = useState({
         title : "",
         artist_name : ""
     });
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isError, setIsError] = useState(false);
 
     const handleChange = event => {
         const value = event.target.value;
@@ -19,8 +21,16 @@ function SongForm(props) {
         event.preventDefault();
 
         axios.post("http://localhost:8000/api/artists/", {title : data.title, artist_name : data.artist_name})
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+            .then(res => {
+                setIsError(false);
+                setSongAdded(!songAdded);
+            })       
+            .catch(err =>{
+                setIsError(true);
+                setErrorMessage(err.response.data.title);
+            });
+                
+          
     }
 
     return (
@@ -44,6 +54,7 @@ function SongForm(props) {
                 </input>
                 <button className = "song-button">Add Song</button>
             </form>
+            <p>{isError ? errorMessage : null}</p>
         </div>
     )
 }
