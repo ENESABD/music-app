@@ -8,21 +8,26 @@ import SongForm from './components/SongForm';
 function App() {
   
   const [list,setList] = useState([]);
-  const [list1,setList1] = useState([]);
+  const [addSong,setAddSong] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:8000/api/artists/")
       .then(res => setList(res.data))
       .catch(err => console.log(err)); 
-  });
+  },[list]);
+
+  const handleClickSong = () => {
+    setAddSong(!addSong);
+  }
 
 
   return (
     <div className = "song-rater">
       <h1>Song Rater</h1>
-      <SongForm />
+      <button onClick = {handleClickSong}>Add a new song</button>
+      {addSong ? <SongForm /> : null}
       <ul>
-        {lst.map(value => (
+        {list.map(value => (
           <li>{value.title}</li>
         ))}
       </ul>
