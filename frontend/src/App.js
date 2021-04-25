@@ -3,26 +3,30 @@ import './App.css';
 import React, { useState, useEffect } from "react";
 //import Modal from "./components/Modal";
 import axios from "axios";
+import SongForm from './components/SongForm';
 
 function App() {
   
   const [lst,setList] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/users/")
+    axios.get("http://localhost:8000/api/artists/")
       .then(res => setList(res.data))
       .catch(err => console.log(err)); 
   });
 
-  // Ismail is irresponsible
 
   
 
-  const newItems = list.map((value) => value.username);
-
   return (
-    <div>
-        {newItems}
+    <div className = "song-rater">
+      <h1>Song Rater</h1>
+      <SongForm />
+      <ul>
+        {lst.map(value => (
+          <li>{value.title}</li>
+        ))}
+      </ul>
     </div>
   );
 }
