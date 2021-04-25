@@ -6,19 +6,22 @@ import axios from "axios";
 
 function App() {
   
-  const [lst,setList] = useState([]);
+  const [list,setList] = useState([]);
+  const [list1,setList1] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/users/")
+    axios.get("http://localhost:8000/api/ratings/")
       .then(res => setList(res.data))
       .catch(err => console.log(err)); 
+
+    axios.get("http://localhost:8000/api/users/")
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err)); 
   });
-
-  // Ismail is irresponsible
-
   
 
   const newItems = list.map((value) => value.username);
+  
 
   return (
     <div>
