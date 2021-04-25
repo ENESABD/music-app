@@ -11,30 +11,12 @@ function App() {
   const [list1,setList1] = useState([]);
 
   useEffect(() => {
-<<<<<<< HEAD
-    axios.get("http://localhost:8000/api/ratings/")
-      .then(res => setList(res.data))
-      .catch(err => console.log(err)); 
-=======
     axios.get("http://localhost:8000/api/artists/")
       .then(res => setList(res.data))
       .catch(err => console.log(err)); 
   });
 
->>>>>>> b827a96ca109093207fbb95e3b15d11bac8341a6
 
-    axios.get("http://localhost:8000/api/users/")
-    .then(res => console.log(res.data))
-    .catch(err => console.log(err)); 
-  });
-  
-
-<<<<<<< HEAD
-  const newItems = list.map((value) => value.username);
-  
-
-=======
->>>>>>> b827a96ca109093207fbb95e3b15d11bac8341a6
   return (
     <div className = "song-rater">
       <h1>Song Rater</h1>
