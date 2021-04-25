@@ -1,25 +1,23 @@
-import React from 'react'
-import SongForm from './SongForm';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-function Songlist() {
 
-    const [songs, setSongs] = useState([]);
-    
-    const addSong = song => {
-        if (!song.text || /^\s*$/.test(song.text)) {
-            return
-        }
-    }
-
-    const newSongs = [song, ...songs]
-
-    setSongs(newSongs);
-    console.log(...songs);
+function Songlist({songAdded}) {
+    const [list,setList] = useState([]);
+  
+    useEffect(() => {
+      axios.get("http://localhost:8000/api/artists/")
+        .then(res => setList(res.data))
+        .catch(err =>console.log(err)); 
+    },[songAdded]);
 
     return (
         <div>
-            <SongForm onSubmit = {addTodo}/>
+            <ul>
+            {list.map(value => (<li>{value.title} <Update />  <Delete />  </li>))}
+            </ul>
         </div>
+
     )
 }
 
