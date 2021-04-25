@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 
-function Songlist({songAdded, setSongName, setRightColumn}) {
+function Songlist({songAdded, setSongDetailRequested, songDetailRequested, setRightColumn, setSongName}) {
     const [list,setList] = useState([]);
   
     useEffect(() => {
@@ -13,7 +13,8 @@ function Songlist({songAdded, setSongName, setRightColumn}) {
 
     const handleClickDetails = (song_name) => {
         setRightColumn("song_details");
-        setSongName(song_name)
+        setSongName(song_name);
+        setSongDetailRequested(!songDetailRequested);
     }
 
     const handleClickUpdate = (song_name) => {

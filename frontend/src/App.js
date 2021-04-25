@@ -13,6 +13,7 @@ function App() {
   const [songAdded,setSongAdded] = useState(false);
   const [songName, setSongName] = useState("");
   const [rightColumn, setRightColumn] = useState("Welcome!");
+  const [songDetailRequested,setSongDetailRequested] = useState(false);
 
 
   const handleClickSong = () => {
@@ -25,9 +26,12 @@ function App() {
       <h1>Song Rater</h1>
       <button onClick = {handleClickSong}>Add a new song</button>
       {addSong ? <SongForm songAdded = {songAdded} setSongAdded={setSongAdded} /> : null}
-      <SongList songAdded={songAdded} setRightColumn = {setRightColumn} setSongName = {setSongName} />
+
+      <SongList songAdded={songAdded} setSongDetailRequested = {setSongDetailRequested} songDetailRequested = {songDetailRequested}
+                setRightColumn = {setRightColumn} setSongName = {setSongName} />
+      
       {rightColumn == "Welcome!" ? <Welcome /> : null}
-      {rightColumn == "song_details" ? <SongDetail songName = {songName} /> : null}
+      {rightColumn == "song_details" ? <SongDetail songName = {songName} songDetailRequested = {songDetailRequested} /> : null}
       {rightColumn == "song_update" ? <SongUpdate songName = {songName} setRightColumn = {setRightColumn} /> : null}
       {rightColumn == "song_delete" ? <SongDelete songName = {songName} setRightColumn = {setRightColumn} /> : null}
 
