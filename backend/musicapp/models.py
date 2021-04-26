@@ -9,6 +9,7 @@ class User(models.Model):
         return self.username
 
 class Artist(models.Model):
+    no = models.IntegerField(default = 1)
     title = models.CharField(max_length = 255, unique = True)
     artist_name = models.CharField(max_length = 255)
 

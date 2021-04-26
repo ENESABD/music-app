@@ -1,9 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react';
+import  axios from "axios";
 
-function SongDelete() {
+function SongDelete( { songID , setRightColumn } ) {
+
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isError, setIsError] = useState(false);
+
+    const handleClickYes = () => {
+        axios.delete(`http://localhost:8000/api/artists/${songID}/`)
+            .then(res => {
+                setIsError(false);
+                setRightColumn("Welcome!");
+            })       
+            .catch(err =>{
+                setIsError(true);
+                setErrorMessage(err.response.data.title);
+            });            
+    }
+
+    const handleClickNo = () => {
+        setRightColumn("Welcome!");
+    }
+
+
+
     return (
         <div>
-            
+            <div className = "are-you-sure">
+                <p>Are you sure you want to delete this song?</p>
+                <button className = "delete-yes" onClick = {handleClickYes} >Yes</button>
+                <button className = "delete-no" onClick = {handleClickNo} >No</button>
+            </div>
+            <p className = "error-msg">{isError ? errorMessage : null}</p>
         </div>
     )
 }

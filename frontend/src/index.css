@@ -6,32 +6,90 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: white;
 }
+
+* {
+  background-color: #360d52;
+}
+
+.heading {
+  color: white;
+  margin-top: 30px;
+
+}
+
+
 button {
   margin: 5px;
   padding: 5px;
 }
-.todo-title {
-  cursor: pointer;
+
+.song-rater {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 }
-.completed-todo {
-  text-decoration: line-through;
+
+.add-song-button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #0066ff;
+  color: white;
+  border-radius: 4px;
+  border: none;
+  margin-left: 10px;
+  margin-right: 10px;
 }
-.tab-list > span {
-  padding: 5px 8px;
-  border: 1px solid #282c34;
-  border-radius: 10px;
-  margin: 5px;
-  /* Spans do not have margins on top or bottom.
-     However, this can be fixed with an inline-block
-     per https://stackoverflow.com/a/11700999. */
-  display: inline-block;
-  cursor: pointer;
-}
-/* Change the style for the active tab-list span. 
-   Other than that, it inherits from the above. */
-.tab-list > span.active {
+
+.song-name-button {
+  border: none;
   background-color: #282c34;
-  color: #ffffff;
+  font-size: large;
+  font-weight: 600;
+  color: white;
+  
+}
+
+.song-list {
+  list-style: none;
+  display: flex; 
+  justify-content: space-between;
+
+}
+.song-input {
+  color: white;
+}
+
+.song-button {
+  background-color: #0066ff;
+  color: white;
+  border-radius: 4px;
+  border: none;
+}
+
+.song-update-button {
+  background-color : #ff980f;
+  color: white;
+  border-radius: 4px;
+  border: none;
+}
+
+.song-delete-button {
+  background-color: #f44336;
+  color: white;
+  border-radius: 4px;
+  border: none;
+}
+
+.error-msg {
+  color: white;
+}
+
+.align-right {
+  float: right;
+}
+
+.search-bar {
+  width: 100px;
 }

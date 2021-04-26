@@ -2,39 +2,64 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 
-function Songlist({songAdded, setSongDetailRequested, songDetailRequested, setRightColumn, setSongName}) {
+
+
+function Songlist({songAdded, setSongAdded, setRightColumn, setSongID, rightColumn}) {
     const [list,setList] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [fixAddSong, setFixAddSong] = useState(false);
   
     useEffect(() => {
       axios.get("http://localhost:8000/api/artists/")
-        .then(res => setList(res.data))
+        .then(res => {
+            setList(res.data);
+            setFixAddSong(true);
+        })
         .catch(err =>console.log(err)); 
-    },[songAdded]);
+    },[songAdded,rightColumn]);
 
-    const handleClickDetails = (song_name) => {
+    useEffect(() => {
+        setSongAdded(false);
+    },[fixAddSong]);
+    
+
+    const handleClickDetails = (song_id) => {
         setRightColumn("song_details");
-        setSongName(song_name);
-        setSongDetailRequested(!songDetailRequested);
+        setSongID(song_id);
     }
 
-    const handleClickUpdate = (song_name) => {
+    const handleClickUpdate = (song_id) => {
         setRightColumn("song_update");
-        setSongName(song_name)
+        setSongID(song_id);
     }
 
-    const handleClickDelete = (song_name) => {
+    const handleClickDelete = (song_id) => {
         setRightColumn("song_delete");
-        setSongName(song_name)
+        setSongID(song_id);
     }
+
+    const handleChangeSearch = event => {
+        setSearchTerm(event.target.value)
+    }
+
 
     return (
-        <div>
+        <div className = "container">
+            <input type = "text" className = "search-bar" placeholder = "Search..." onChange = {handleChangeSearch} />
             <ul>
-            {list.map(value => (
-                <li>
-                    <button className = "song-button" onClick = {(e) => handleClickDetails(value.title, e)}>{value.title}</button> 
-                    <button className = "song-button" onClick = {handleClickUpdate}>Update</button> 
-                    <button className = "song-button" onClick = {handleClickDelete}>Delete</button>
+            {list.filter(value => {
+                if (searchTerm == "") {
+                    return value
+                } else if (value.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return value
+                }
+            }).map(value => (
+                <li className = "song-list">
+                    <button className = "song-name-button" onClick = {(e) => handleClickDetails(value.id, e)}>{value.title}</button>
+                    <div className = "align-right">
+                        <button className = "song-update-button" onClick = {(e) => handleClickUpdate(value.id, e)}>Update</button> 
+                        <button className = "song-delete-button" onClick = {(e) => handleClickDelete(value.id, e)}>Delete</button>
+                    </div> 
                 </li>))}
             </ul>
         </div>

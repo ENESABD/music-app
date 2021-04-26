@@ -16,7 +16,7 @@ class RatingSerializer(serializers.ModelSerializer):
 class ArtistSerializer(serializers.ModelSerializer):
   class Meta:
     model = Artist
-    fields = ('title', 'artist_name')
+    fields = ('id','no','title', 'artist_name')
 
 class DetailSerializer(serializers.ModelSerializer):
   class Meta:

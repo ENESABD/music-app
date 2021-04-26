@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import axios from "axios";
 
-function SongUpdate() {
+function SongUpdate({ songID, setRightColumn }) {
+    console.log(songID);
     const [data, setData] = useState({
         title : "",
         artist_name : ""
@@ -20,9 +21,10 @@ function SongUpdate() {
     const handleSubmit = event => {
         event.preventDefault();
 
-        axios.put("http://localhost:8000/api/artists/", {title : data.title, artist_name : data.artist_name})
+        axios.put(`http://localhost:8000/api/artists/${songID}/`, {no: songID, title : data.title, artist_name : data.artist_name})
             .then(res => {
                 setIsError(false);
+                setRightColumn("Welcome!");
             })       
             .catch(err =>{
                 setIsError(true);
@@ -51,9 +53,9 @@ function SongUpdate() {
                     className = "song-input"
                     onChange = {handleChange}>
                 </input>
-                <button className = "song-button">Add Song</button>
+                <button className = "song-button">Update</button>
             </form>
-            <p>{isError ? errorMessage : null}</p>
+            <p className = "error-msg">{isError ? errorMessage : null}</p>
         </div>
     )
 }

@@ -17,9 +17,10 @@ function SongForm({songAdded, setSongAdded}) {
         });
     }
 
-    const handleSubmit = event => {
-        event.preventDefault();
+    
 
+    const handleSubmit = event => {
+        event.preventDefault();       
         axios.post("http://localhost:8000/api/artists/", {title : data.title, artist_name : data.artist_name})
             .then(res => {
                 setIsError(false);
@@ -28,10 +29,9 @@ function SongForm({songAdded, setSongAdded}) {
             .catch(err =>{
                 setIsError(true);
                 setErrorMessage(err.response.data.title);
-            });
-                
-          
+            });      
     }
+
 
     return (
         <div>
@@ -54,7 +54,7 @@ function SongForm({songAdded, setSongAdded}) {
                 </input>
                 <button className = "song-button">Add Song</button>
             </form>
-            <p>{isError ? errorMessage : null}</p>
+            <p className = "error-msg">{isError ? errorMessage : null}</p>
         </div>
     )
 }

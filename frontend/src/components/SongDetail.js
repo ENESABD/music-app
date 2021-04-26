@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 
-function SongDetail({ songName , songDetailRequested}) {
+function SongDetail({ songName , /*songDetailRequested*/}) {
     const [songDetailsList, setSongDetailsList] = useState([]);
     const [songDetails, setSongDetails] = useState([]);
     const [isLoading,setIsLoading] = useState(true);
 
     console.log(songName);
-    console.log(songDetailRequested);
+    //console.log(songDetailRequested);
 
   
     useEffect(() => {
