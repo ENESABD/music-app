@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
 
-function SongForm({ songAdded, setSongAdded }) {
+function AddSongForm({setSongAdded , songAdded, setHideForm, setAddSong}) {
     const [info, setInfo] = useState({
         song_name : "",
         artist_name : "",
@@ -23,17 +23,33 @@ function SongForm({ songAdded, setSongAdded }) {
     
     const handleSubmit = async (event) => {
         event.preventDefault();
-        let res = await axios.post("http://localhost:8000/api/songs/", {song_name : info.song_name, artist_name : info.artist_name}); 
-        axios.post("http://localhost:8000/api/details/", {song : res.data.id, genre : info.genre, 
+        try {
+            let result = await axios.post("http://localhost:8000/api/songs/", 
+                                        {song_name : info.song_name, artist_name : info.artist_name});
+            console.log("1"); 
+            axios.post("http://localhost:8000/api/details/", {song : result.data.id, genre : info.genre, 
                     year_of_release : info.year_of_release, duration_of_song : info.duration_of_song})
-            .then(res => {
-                setIsError(false);
-                setSongAdded(!songAdded);
-            })       
-            .catch(err =>{
+                .then(res => {
+                    setIsError(false);
+                    setSongAdded(!songAdded);
+                    setHideForm(true);
+                    setAddSong(false);
+                })       
+                .catch(err =>{
+                    setIsError(true);
+                    setErrorMessage("Please fill in all the fields!");
+            });    
+        } catch (err) {
+            console.log(err.response.data.song_name);
+            console.log(err.response.data.song_name[0] == "song with this song name already exists.");
+            if(err.response.data.song_name[0] == "song with this song name already exists.") {
                 setIsError(true);
-                setErrorMessage(err.response.data.song_name);
-            });      
+                setErrorMessage("You can already enjoy information about this song in our website! It is already in our database!");
+            } else {
+                setIsError(true);
+                setErrorMessage("Please fill in all the fields!");
+            }
+        }       
         }
 
 
@@ -84,9 +100,8 @@ function SongForm({ songAdded, setSongAdded }) {
                 <button className = "song-button">Add Song</button>
             </form>
             <p className = "error-msg">{isError ? errorMessage : null}</p>
-            <p className = "error-msg">{errorMessage == undefined ? "Please enter an Artist Name" : null}</p>
         </div>
     )
 }
 
-export default SongForm
+export default AddSongForm

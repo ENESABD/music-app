@@ -5,23 +5,23 @@ import axios from "axios";
 
 
 function Songlist({songAdded, setSongAdded, setRightColumn, setSongID, rightColumn}) {
-    const [list,setList] = useState([]);
+    const [list,setList] = useState([]); // List of Detail Objects
     const [songList,setSongList] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [fixAddSong, setFixAddSong] = useState(false);
     const [sortValue, setSortValue] = useState('');
 
     const handleSelectChange = event => {
         const value = event.target.value;
         setSortValue(value);
     }
+
+    
+   
   
     useEffect(() => {
       axios.get("http://localhost:8000/api/details/") 
         .then(res => {
             setList(res.data);
-            setFixAddSong(true);
-            console.log(res.data);
         })
         .catch(err =>console.log(err)); 
     },[songAdded,rightColumn]);
@@ -30,23 +30,16 @@ function Songlist({songAdded, setSongAdded, setRightColumn, setSongID, rightColu
     useEffect(() => {
         axios.get("http://localhost:8000/api/songs/")
             .then(res => {
-                console.log(res.data);
-                setSongList(res.data);})
+                setSongList(res.data);
+            })
             .catch(err => console.log("no"));
     }, [songAdded])
 
     const getSong = (song_object_id) => {
-        console.log(song_object_id);
-        console.log(songList);
-        console.log(songList.filter(value => value.id == song_object_id));
         return songList.filter(value => value.id == song_object_id)[0];
     }
 
     
-
-    useEffect(() => {
-        setSongAdded(false);
-    },[fixAddSong]);
     
 
     const handleClickDetails = (song_id) => {

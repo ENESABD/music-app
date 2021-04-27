@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 
-function SongDetail({ songName, setRightColumn, songID }) {
+function SongDetail({ songID }) {
     const [songDetailsList, setSongDetailsList] = useState([]);
     const [songDetails, setSongDetails] = useState([]);
   
