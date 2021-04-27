@@ -31,7 +31,7 @@ button {
   text-align: center;
 }
 
-.add-song-button {
+.add-song-button1 {
   margin-top: 10px;
   margin-bottom: 10px;
   background-color: #0066ff;
@@ -44,7 +44,7 @@ button {
 
 .song-name-button {
   border: none;
-  background-color: #282c34;
+  background-color: #360d52;
   font-size: large;
   font-weight: 600;
   color: white;
@@ -91,5 +91,44 @@ button {
 }
 
 .search-bar {
-  width: 100px;
+  width: 50%;
+  color: black;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: 2px solid;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.list-container {
+  width: 80%;
+  display: table;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.are-you-sure {
+  color: white;
+}
+
+.delete-yes {
+  color: white;
+  border-radius: 4px;
+  border: none;
+  background-color: green;
+}
+
+.delete-no {
+  color: white;
+  border-radius: 4px;
+  border: none;
+  background-color: a#f44336;
+}
+
+.sort-by {
+  color: white;
+}
+
+.sort-by-select {
+  color:white;
 }

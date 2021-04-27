@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import UserSerializer, RatingSerializer, DetailSerializer, ArtistSerializer
-from .models import User, Rating, Detail, Artist
+from .serializers import UserSerializer, RatingSerializer, DetailSerializer, SongSerializer
+from .models import User, Rating, Detail, Song
 
 
 
@@ -14,9 +14,9 @@ class RatingView(viewsets.ModelViewSet):
     serializer_class = RatingSerializer
     queryset = Rating.objects.all()
 
-class ArtistView(viewsets.ModelViewSet):
-    serializer_class = ArtistSerializer
-    queryset = Artist.objects.all()
+class SongView(viewsets.ModelViewSet):
+    serializer_class = SongSerializer
+    queryset = Song.objects.all()
 
 class DetailView(viewsets.ModelViewSet):
     serializer_class = DetailSerializer

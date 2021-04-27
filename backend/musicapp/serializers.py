@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Rating, Artist, Detail
+from .models import User, Rating, Song, Detail
 
 # The serializer translates a Todo object into a format that
 # can be stored in our database. We use the Todo model.
@@ -13,10 +13,10 @@ class RatingSerializer(serializers.ModelSerializer):
     model = Rating
     fields = ['username', 'song', 'rating']
 
-class ArtistSerializer(serializers.ModelSerializer):
+class SongSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Artist
-    fields = ('id','no','title', 'artist_name')
+    model = Song
+    fields = ('id','no','song_name', 'artist_name')
 
 class DetailSerializer(serializers.ModelSerializer):
   class Meta:

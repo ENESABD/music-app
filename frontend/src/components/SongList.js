@@ -8,9 +8,15 @@ function Songlist({songAdded, setSongAdded, setRightColumn, setSongID, rightColu
     const [list,setList] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [fixAddSong, setFixAddSong] = useState(false);
+    const [sortValue, setSortValue] = useState('');
+
+    const handleSelectChange = event => {
+        const value = event.target.value;
+        setSortValue(value);
+    }
   
     useEffect(() => {
-      axios.get("http://localhost:8000/api/artists/")
+      axios.get("http://localhost:8000/api/songs/") //details
         .then(res => {
             setList(res.data);
             setFixAddSong(true);
@@ -42,25 +48,45 @@ function Songlist({songAdded, setSongAdded, setRightColumn, setSongID, rightColu
         setSearchTerm(event.target.value)
     }
 
+    console.log(sortValue);
 
     return (
         <div className = "container">
-            <input type = "text" className = "search-bar" placeholder = "Search..." onChange = {handleChangeSearch} />
-            <ul>
-            {list.filter(value => {
+            <input type = "text" className = "search-bar" placeholder = "Search by Song Name or Artist Name" onChange = {handleChangeSearch} />
+            <p className = "sort-by">Sort By:</p>
+            <select className = "sort-by-select" onChange = {handleSelectChange}>
+                <option value = "none">None</option>
+                <option value = "song_name">Song Name</option>
+                <option value = "rating">Rating</option>
+                <option value = "year_of_release">Year of Release</option>
+                <option value = "song_duration">Duration of Song</option>
+            </select>
+            <ul className = "list-container">
+                {list.filter(value => {
                 if (searchTerm == "") {
                     return value
-                } else if (value.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+                } else if (value.song_name.toLowerCase().includes(searchTerm.toLowerCase()) || value.artist_name.toLowerCase().includes(searchTerm.toLowerCase())) {
                     return value
                 }
-            }).map(value => (
-                <li className = "song-list">
-                    <button className = "song-name-button" onClick = {(e) => handleClickDetails(value.id, e)}>{value.title}</button>
-                    <div className = "align-right">
-                        <button className = "song-update-button" onClick = {(e) => handleClickUpdate(value.id, e)}>Update</button> 
-                        <button className = "song-delete-button" onClick = {(e) => handleClickDelete(value.id, e)}>Delete</button>
-                    </div> 
-                </li>))}
+                }).sort((a, b) => {
+                    if (sortValue == "song_name") {
+                        return a.song_name.localeCompare(b.song_name);
+                    } 
+                    // else if (sortValue == "rating") {
+                        //return a.rating - b.rating 
+                    // } else if (sortValue == "year_of_release") {
+                        //return a.year_of_release - b.year_of_release
+                    // } else if (sortValue == "duration_of_song") {
+                        //return a.duration_of_song.localeCompare(b.duration_of_song);
+                    // }
+                }).map(value => (
+                    <li className = "song-list">
+                        <button className = "song-name-button" onClick = {(e) => handleClickDetails(value.id, e)}>{value.song_name}</button>
+                        <div className = "align-right">
+                            <button className = "song-update-button" onClick = {(e) => handleClickUpdate(value.id, e)}>Update</button> 
+                            <button className = "song-delete-button" onClick = {(e) => handleClickDelete(value.id, e)}>Delete</button>
+                        </div> 
+                    </li>))}
             </ul>
         </div>
 
@@ -68,8 +94,3 @@ function Songlist({songAdded, setSongAdded, setRightColumn, setSongID, rightColu
 }
 
 export default Songlist
-
-// pass song name variable to song list
-//change onclick button from value.title
-//replace update, delete, value.title with buttons and write onClick for them 
-// the onClick function will set the value of the right column to song detail - then we write conditional - if it is song detail then give song detail - if right column =- song detail ? <song detail /> : null 

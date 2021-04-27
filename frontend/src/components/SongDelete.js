@@ -7,14 +7,14 @@ function SongDelete( { songID , setRightColumn } ) {
     const [isError, setIsError] = useState(false);
 
     const handleClickYes = () => {
-        axios.delete(`http://localhost:8000/api/artists/${songID}/`)
+        axios.delete(`http://localhost:8000/api/songs/${songID}/`)
             .then(res => {
                 setIsError(false);
                 setRightColumn("Welcome!");
             })       
             .catch(err =>{
                 setIsError(true);
-                setErrorMessage(err.response.data.title);
+                setErrorMessage(err.response.data.song_name);
             });            
     }
 
