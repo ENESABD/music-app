@@ -37,10 +37,10 @@ function App() {
       <div className = "add-song-button">
         <button className = "add-song-button" onClick = {handleClickSong}>Add a new song</button>
       </div>
-      {addSong ? <SongForm songAdded = {songAdded} setSongAdded={setSongAdded}/> : null} 
+      {addSong ? <SongForm songID = {songID} songAdded = {songAdded} setSongAdded={setSongAdded}/> : null} 
 
       {rightColumn == "Welcome!" ? <Welcome /> : null}
-      {rightColumn == "song_details" ? <SongDetail songID = {songID} /> : null}
+      {rightColumn == "song_details" ? <SongDetail songID = {songID} setRightColumn = {setRightColumn} /> : null}
       {rightColumn == "song_update" ? <SongUpdate songID = {songID} setRightColumn = {setRightColumn} /> : null}
       {rightColumn == "song_delete" ? <SongDelete songID = {songID} setRightColumn = {setRightColumn} /> : null}
 

@@ -1,27 +1,34 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from "axios";
 
-function SongForm({songAdded, setSongAdded}) {
-    const [data, setData] = useState({
+function SongForm({ songAdded, setSongAdded }) {
+    const [info, setInfo] = useState({
         title : "",
-        artist_name : ""
+        artist_name : "",
+        genre : "",
+        year_of_release : "",
+        duration_of_song : ""
     });
     const [errorMessage, setErrorMessage] = useState("");
     const [isError, setIsError] = useState(false);
 
     const handleChange = event => {
         const value = event.target.value;
-        setData({
-            ...data,
+        setInfo({
+            ...info,
             [event.target.name] : value
         });
     }
 
     
 
-    const handleSubmit = event => {
-        event.preventDefault();       
-        axios.post("http://localhost:8000/api/artists/", {title : data.title, artist_name : data.artist_name})
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        let res = await axios.post("http://localhost:8000/api/artists/", {title : info.title, artist_name : info.artist_name});
+
+        
+        axios.post("http://localhost:8000/api/details/", {song : res.data.id, genre : info.genre, 
+                    year_of_release : info.year_of_release, duration_of_song : info.duration_of_song})
             .then(res => {
                 setIsError(false);
                 setSongAdded(!songAdded);
@@ -29,7 +36,8 @@ function SongForm({songAdded, setSongAdded}) {
             .catch(err =>{
                 setIsError(true);
                 setErrorMessage(err.response.data.title);
-            });      
+                console.log(err.response.data);
+            }); 
     }
 
 
@@ -39,7 +47,7 @@ function SongForm({songAdded, setSongAdded}) {
                 <input
                     type = "text" 
                     placeholder = "Enter a Song" 
-                    value = {data.title} 
+                    value = {info.title} 
                     name = "title" 
                     className = "song-input"
                     onChange = {handleChange}>
@@ -47,11 +55,36 @@ function SongForm({songAdded, setSongAdded}) {
                 <input
                     type = "text" 
                     placeholder = "Enter the Artist" 
-                    value = {data.artist_name} 
+                    value = {info.artist_name} 
                     name = "artist_name" 
                     className = "song-input"
                     onChange = {handleChange}>
                 </input>
+                <input
+                    type = "text" 
+                    placeholder = "Enter the genre" 
+                    value = {info.genre} 
+                    name = "genre" 
+                    className = "song-input"
+                    onChange = {handleChange}>
+                </input>
+                <input
+                    type = "number" 
+                    placeholder = "Enter the year of release" 
+                    value = {info.year_of_release} 
+                    name = "year_of_release" 
+                    className = "song-input"
+                    onChange = {handleChange}>
+                </input>
+                <input
+                    type = "text" 
+                    placeholder = "Enter the song duration" 
+                    value = {info.duration_of_song} 
+                    name = "duration_of_song" 
+                    className = "song-input"
+                    onChange = {handleChange}>
+                </input>
+                
                 <button className = "song-button">Add Song</button>
             </form>
             <p className = "error-msg">{isError ? errorMessage : null}</p>

@@ -1,45 +1,30 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 
-function SongDetail({ songName , /*songDetailRequested*/}) {
+function SongDetail({ songName, setRightColumn, songID }) {
     const [songDetailsList, setSongDetailsList] = useState([]);
     const [songDetails, setSongDetails] = useState([]);
-    const [isLoading,setIsLoading] = useState(true);
-
-    console.log(songName);
-    //console.log(songDetailRequested);
-
   
     useEffect(() => {
-        console.log("123");
         axios.get("http://localhost:8000/api/details/")
             .then(res => {
-                setSongDetailsList(res.data.filter(value => value == songName));
-                setIsLoading(false);
+                console.log("alaa");
+                console.log(res.data);
             })
             .catch(err =>console.log(err)); 
-    },[songDetailsList, songName, isLoading]);
+    },[songID]);
+
+    console.log(songID);
+    console.log(songDetailsList);
 
     
 
-    if(isLoading){
-        return <div>Loading...</div>
-    }
-    
-    
-
-    if(!isLoading){
-        console.log(songDetailsList);
-        setSongDetails([songDetailsList[0].song, songDetailsList[0].genre]);
-
-        return (
-            <div>
-                {songDetails}
-            </div>
-    
+    return (
+        <div>
+            {songDetailsList}
+        </div>
         )
-    }
-
 }
+
 
 export default SongDetail
