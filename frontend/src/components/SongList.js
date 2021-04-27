@@ -78,7 +78,6 @@ function Songlist({songAdded, setSongAdded, setRightColumn, setSongID, rightColu
                 <option value = "song_name">Song Name</option>
                 <option value = "rating">Rating</option>
                 <option value = "year_of_release">Year of Release</option>
-                <option value = "duration_of_song">Duration of Song</option>
             </select>
             <ul className = "list-container">
                 {list.filter(value => {
@@ -96,11 +95,7 @@ function Songlist({songAdded, setSongAdded, setRightColumn, setSongID, rightColu
                         return a.rating - b.rating 
                     } else if (sortValue == "year_of_release") {
                         return a.year_of_release - b.year_of_release
-                    } else if (sortValue == "duration_of_song") {
-                        // console.log(a);
-                        // console.log(a.duration_of_song);
-                        return a.duration_of_song.localeCompare(b.duration_of_song); // duration_of_song doesn't work
-                    }
+                    } 
                 }).map(value => (
                     <li className = "song-list">
                         <button className = "song-name-button" onClick = {(e) => handleClickDetails(value.song, e)}>{getSong(value.song).song_name}</button>
