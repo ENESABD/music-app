@@ -3,7 +3,7 @@ import axios from "axios";
 
 function SongForm({ songAdded, setSongAdded }) {
     const [info, setInfo] = useState({
-        title : "",
+        song_name : "",
         artist_name : "",
         genre : "",
         year_of_release : "",

@@ -14,7 +14,7 @@ class SongAdmin(admin.ModelAdmin):
     list_display = ('id','no','song_name', 'artist_name')
 
 class DetailAdmin(admin.ModelAdmin):
-    list_display = ('song', 'genre', 'year_of_release', 'duration_of_song')
+    list_display = ('id', 'song', 'genre', 'year_of_release', 'duration_of_song')
 
 admin.site.register(User)
 admin.site.register(Rating)

@@ -6,6 +6,7 @@ import axios from "axios";
 
 function Songlist({songAdded, setSongAdded, setRightColumn, setSongID, rightColumn}) {
     const [list,setList] = useState([]);
+    const [songList,setSongList] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [fixAddSong, setFixAddSong] = useState(false);
     const [sortValue, setSortValue] = useState('');
@@ -16,13 +17,32 @@ function Songlist({songAdded, setSongAdded, setRightColumn, setSongID, rightColu
     }
   
     useEffect(() => {
-      axios.get("http://localhost:8000/api/songs/") //details
+      axios.get("http://localhost:8000/api/details/") 
         .then(res => {
             setList(res.data);
             setFixAddSong(true);
+            console.log(res.data);
         })
         .catch(err =>console.log(err)); 
     },[songAdded,rightColumn]);
+
+
+    useEffect(() => {
+        axios.get("http://localhost:8000/api/songs/")
+            .then(res => {
+                console.log(res.data);
+                setSongList(res.data);})
+            .catch(err => console.log("no"));
+    }, [songAdded])
+
+    const getSong = (song_object_id) => {
+        console.log(song_object_id);
+        console.log(songList);
+        console.log(songList.filter(value => value.id == song_object_id));
+        return songList.filter(value => value.id == song_object_id)[0];
+    }
+
+    
 
     useEffect(() => {
         setSongAdded(false);
@@ -48,7 +68,6 @@ function Songlist({songAdded, setSongAdded, setRightColumn, setSongID, rightColu
         setSearchTerm(event.target.value)
     }
 
-    console.log(sortValue);
 
     return (
         <div className = "container">
@@ -59,32 +78,36 @@ function Songlist({songAdded, setSongAdded, setRightColumn, setSongID, rightColu
                 <option value = "song_name">Song Name</option>
                 <option value = "rating">Rating</option>
                 <option value = "year_of_release">Year of Release</option>
-                <option value = "song_duration">Duration of Song</option>
+                <option value = "duration_of_song">Duration of Song</option>
             </select>
             <ul className = "list-container">
                 {list.filter(value => {
                 if (searchTerm == "") {
-                    return value
-                } else if (value.song_name.toLowerCase().includes(searchTerm.toLowerCase()) || value.artist_name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return getSong(value.song)
+                } else if (getSong(value.song).song_name.toLowerCase().includes(searchTerm.toLowerCase()) || getSong(value.song).artist_name.toLowerCase().includes(searchTerm.toLowerCase())) {
                     return value
                 }
                 }).sort((a, b) => {
                     if (sortValue == "song_name") {
-                        return a.song_name.localeCompare(b.song_name);
+                        //console.log(a.song.song_name);
+                        return getSong(a.song).song_name.localeCompare(getSong(b.song).song_name);
                     } 
-                    // else if (sortValue == "rating") {
-                        //return a.rating - b.rating 
-                    // } else if (sortValue == "year_of_release") {
-                        //return a.year_of_release - b.year_of_release
-                    // } else if (sortValue == "duration_of_song") {
-                        //return a.duration_of_song.localeCompare(b.duration_of_song);
-                    // }
+                    else if (sortValue == "rating") {
+                        return a.rating - b.rating 
+                    } else if (sortValue == "year_of_release") {
+                        return a.year_of_release - b.year_of_release
+                    } else if (sortValue == "duration_of_song") {
+                        // console.log(a);
+                        // console.log(a.duration_of_song);
+                        return a.duration_of_song.localeCompare(b.duration_of_song); // duration_of_song doesn't work
+                    }
                 }).map(value => (
                     <li className = "song-list">
-                        <button className = "song-name-button" onClick = {(e) => handleClickDetails(value.id, e)}>{value.song_name}</button>
+                        <button className = "song-name-button" onClick = {(e) => handleClickDetails(value.song, e)}>{getSong(value.song).song_name}</button>
+                        <p className = "song-para">{getSong(value.song).artist_name}</p>
                         <div className = "align-right">
-                            <button className = "song-update-button" onClick = {(e) => handleClickUpdate(value.id, e)}>Update</button> 
-                            <button className = "song-delete-button" onClick = {(e) => handleClickDelete(value.id, e)}>Delete</button>
+                            <button className = "song-update-button" onClick = {(e) => handleClickUpdate(value.song, e)}>Update</button> 
+                            <button className = "song-delete-button" onClick = {(e) => handleClickDelete(value.song, e)}>Delete</button>
                         </div> 
                     </li>))}
             </ul>
