@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import User, Rating, Artist, Detail
+from .models import User, Rating, Song, Detail
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -10,13 +10,13 @@ class UserAdmin(admin.ModelAdmin):
 class RatingAdmin(admin.ModelAdmin):
     list_display = ('username', 'song', 'rating')
 
-class ArtistAdmin(admin.ModelAdmin):
-    list_display = ('id','no','title', 'artist_name')
+class SongAdmin(admin.ModelAdmin):
+    list_display = ('id','no','song_name', 'artist_name')
 
 class DetailAdmin(admin.ModelAdmin):
     list_display = ('song', 'genre', 'year_of_release', 'duration_of_song', 'copyrighted')
 
 admin.site.register(User)
 admin.site.register(Rating)
-admin.site.register(Artist)
+admin.site.register(Song)
 admin.site.register(Detail)

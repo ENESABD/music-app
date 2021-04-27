@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from "axios";
 
 function SongForm({songAdded, setSongAdded}) {
     const [data, setData] = useState({
-        title : "",
+        song_name : "",
         artist_name : ""
     });
     const [errorMessage, setErrorMessage] = useState("");
@@ -16,21 +16,20 @@ function SongForm({songAdded, setSongAdded}) {
             [event.target.name] : value
         });
     }
-
     
 
     const handleSubmit = event => {
         event.preventDefault();       
-        axios.post("http://localhost:8000/api/artists/", {title : data.title, artist_name : data.artist_name})
+        axios.post("http://localhost:8000/api/songs/", {song_name : data.song_name, artist_name : data.artist_name})
             .then(res => {
                 setIsError(false);
                 setSongAdded(!songAdded);
             })       
             .catch(err =>{
                 setIsError(true);
-                setErrorMessage(err.response.data.title);
+                setErrorMessage(err.response.data.song_name);
             });      
-    }
+        }
 
 
     return (
@@ -39,8 +38,8 @@ function SongForm({songAdded, setSongAdded}) {
                 <input
                     type = "text" 
                     placeholder = "Enter a Song" 
-                    value = {data.title} 
-                    name = "title" 
+                    value = {data.song_name} 
+                    name = "song_name" 
                     className = "song-input"
                     onChange = {handleChange}>
                 </input>
@@ -55,6 +54,7 @@ function SongForm({songAdded, setSongAdded}) {
                 <button className = "song-button">Add Song</button>
             </form>
             <p className = "error-msg">{isError ? errorMessage : null}</p>
+            <p className = "error-msg">{errorMessage == undefined ? "Please enter an Artist Name" : null}</p>
         </div>
     )
 }

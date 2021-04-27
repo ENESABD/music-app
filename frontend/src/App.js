@@ -35,7 +35,7 @@ function App() {
     <div className = "song-rater">
       <h1 className = "heading">Song Rater</h1>
       <div className = "add-song-button">
-        <button className = "add-song-button" onClick = {handleClickSong}>Add a new song</button>
+        <button className = "add-song-button1" onClick = {handleClickSong}>Add a new song</button>
       </div>
       {addSong ? <SongForm songAdded = {songAdded} setSongAdded={setSongAdded}/> : null} 
 

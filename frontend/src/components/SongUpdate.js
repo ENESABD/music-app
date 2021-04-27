@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from "axios";
 
 function SongUpdate({ songID, setRightColumn }) {
-    console.log(songID);
     const [data, setData] = useState({
-        title : "",
+        song_name : "",
         artist_name : ""
     });
     const [errorMessage, setErrorMessage] = useState("");
@@ -18,17 +17,27 @@ function SongUpdate({ songID, setRightColumn }) {
         });
     }
 
+    
+    useEffect(() => {
+        axios.get("http://localhost:8000/api/songs/", {no: songID})
+        .then(res => {
+            const temp = res.data.filter(val => {return val.id == songID});
+            setData({song_name : temp[0].song_name, artist_name : temp[0].artist_name});
+        })
+        .catch(err => console.log(err));
+    }, [songID])
+
     const handleSubmit = event => {
         event.preventDefault();
 
-        axios.put(`http://localhost:8000/api/artists/${songID}/`, {no: songID, title : data.title, artist_name : data.artist_name})
+        axios.put(`http://localhost:8000/api/songs/${songID}/`, {no: songID, song_name : data.song_name, artist_name : data.artist_name})
             .then(res => {
                 setIsError(false);
                 setRightColumn("Welcome!");
             })       
             .catch(err =>{
                 setIsError(true);
-                setErrorMessage(err.response.data.title);
+                setErrorMessage(err.response.data.song_name);
             });
                 
           
@@ -40,8 +49,8 @@ function SongUpdate({ songID, setRightColumn }) {
                 <input
                     type = "text" 
                     placeholder = "Enter a Song" 
-                    value = {data.title} 
-                    name = "title" 
+                    value = {data.song_name} 
+                    name = "song_name" 
                     className = "song-input"
                     onChange = {handleChange}>
                 </input>
@@ -56,6 +65,7 @@ function SongUpdate({ songID, setRightColumn }) {
                 <button className = "song-button">Update</button>
             </form>
             <p className = "error-msg">{isError ? errorMessage : null}</p>
+            <p className = "error-msg">{errorMessage == undefined ? "Please enter an Artist Name" : null}</p>
         </div>
     )
 }
