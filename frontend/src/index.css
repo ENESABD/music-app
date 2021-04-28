@@ -86,6 +86,10 @@ button {
   color: white;
 }
 
+.update-msg {
+  color: white;
+}
+
 .align-right {
   float: right;
 }

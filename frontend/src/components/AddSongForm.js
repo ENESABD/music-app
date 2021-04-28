@@ -36,20 +36,27 @@ function AddSongForm({setSongAdded , songAdded, setHideForm, setAddSong}) {
                     setAddSong(false);
                 })       
                 .catch(err =>{
+                    axios.delete(`http://localhost:8000/api/songs/${result.data.id}`);
+                    console.log("hiii");
                     setIsError(true);
                     setErrorMessage("Please fill in all the fields!");
             });    
         } catch (err) {
-            console.log(err.response.data.song_name);
-            console.log(err.response.data.song_name[0] == "song with this song name already exists.");
-            if(err.response.data.song_name[0] == "song with this song name already exists.") {
-                setIsError(true);
-                setErrorMessage("You can already enjoy information about this song in our website! It is already in our database!");
+            console.log(err.response.data);
+            if(err.response.data.song_name){
+                if(err.response.data.song_name[0] == "song with this song name already exists.") {
+                    setIsError(true);
+                    setErrorMessage("You can already enjoy information about this song in our website! It is already in our database!");
+                } else {
+                    setIsError(true);
+                    setErrorMessage("Please fill in all the fields!");
+                }
             } else {
                 setIsError(true);
                 setErrorMessage("Please fill in all the fields!");
             }
-        }       
+            
+        };       
         }
 
 

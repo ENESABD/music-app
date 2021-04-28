@@ -33,7 +33,7 @@ function Songlist({songAdded, setSongAdded, setRightColumn, setSongID, rightColu
                 setSongList(res.data);
             })
             .catch(err => console.log("no"));
-    }, [songAdded])
+    }, [songAdded,rightColumn]);
 
     const getSong = (song_object_id) => {
         return songList.filter(value => value.id == song_object_id)[0];
