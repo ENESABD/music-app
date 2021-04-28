@@ -26,7 +26,7 @@ npm start
 ```
 
 
-## Our features
+## Additional features
 
 For Problem 2, we have implemented some additional features. We have created a Search Bar, that allows the user to search for songs by Song Name or Artist Name. We have also created a Sorting functionality that lets the user sort the list of songs by Song Name, Rating, or the Year of Release. We have also added a Details table to our database, which displays the details of a song (its genre and its year of release) when a song in the song list is clicked. 
 
