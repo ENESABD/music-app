@@ -21,7 +21,6 @@ python3 manage.py runserver
 
 ```
 cd frontend
-npm add bootstrap react-bootstrap
 npm add axios
 npm start
 ```
