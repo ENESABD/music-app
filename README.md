@@ -1,6 +1,6 @@
 # music-app
 
-This app is deployed with some slight changes at the following link: https://the-music-rating-app.herokuapp.com/ . This is a Heroku app; so, please allow about 30 seconds for the page to load at first.
+This app is deployed with some slight changes at the following link: https://the-music-rating-app.herokuapp.com/ . Please allow about 30 seconds for the server to wake up.
 
 # Instructions to run our app
 
